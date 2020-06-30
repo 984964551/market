@@ -1,0 +1,154 @@
+﻿<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="optitle clearfix">
+			<div class="title">用户管理&gt;&gt;</div>
+		</div>
+			<div class="content">
+				<table class="box"> 
+					<tbody id="user-view">
+					<tr>
+						<td class="field">用户编号：</td>
+						<td>1<input type="hidden" id="userId" value="1"></td>
+					</tr>
+					<tr>
+						<td class="field">用户名：</td>
+						<td>秦守新</td>
+					</tr>
+					<tr>
+						<td class="field">用户账号：</td>
+						<td>shouxin.qin</td>
+					</tr>
+
+					<tr>
+						<td class="field">用户性别：</td>
+						<td>男</td>
+					</tr>
+					<tr>
+						<td class="field">出生日期：</td>
+						<td>2014-09-09</td>
+					</tr>
+					<tr>
+						<td class="field">用户年龄：</td>
+						<td>2</td>
+					</tr>
+					<tr>
+						<td class="field">用户电话：</td>
+						<td>111</td>
+					</tr>
+					<tr>
+						<td class="field">用户地址：</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="field">用户权限：</td>
+						<td>普通员工</td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="buttons">
+				<input type="button" id="update" value="修改" class="input-button">
+				<input type="button" id="del" value="删除" class="input-button"> 
+				<input type="button" id="repassword" value="重置密码" class="input-button"> 
+				<input type="button" id="backButton" onclick="history.back(-1)" value="返回" class="input-button">
+			</div>
+	</div>
+	<!--<script type="text/javascript" src="js/user/view.js"></script>-->
+
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script>
+        var id=window.location.search.split("=")[1];
+		$(function () {
+
+            $.ajax({
+                url:"user/findById",
+				data:{id:id},
+                type:"post",
+                success:function (data) {
+                    var contentHtml ='\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户编号：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.id+'<input type="hidden" id="userId" value="1"></td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户名：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.name+'</td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户账号：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.userName+'</td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户性别：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.sex+'</td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">出生日期：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.birthdaystr+'</td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户年龄：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.age+'</td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户电话：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.phone+'</td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户地址：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.address+'</td>\n' +
+                        '\t\t\t\t\t</tr>\n' +
+                        '\t\t\t\t\t<tr>\n' +
+                        '\t\t\t\t\t\t<td class="field">用户权限：</td>\n' +
+                        '\t\t\t\t\t\t<td>'+data.role+'</td>\n' +
+                        '\t\t\t\t\t</tr>';
+                    $("#user-view").html(contentHtml);
+                }
+            })
+        });
+
+		//删除用户
+		$("#del").click(function () {
+            if(confirm("确认删除？")){
+                $.ajax({
+                    url:"user/delById",
+                    data:{id:id},
+                    success:function (data) {
+                        location.href = "userList.html";
+                    }
+                })
+            }
+        });
+
+		//重置用户密码 默认值123456
+        $("#repassword").click(function () {
+            if(confirm("确认重置密码？")){
+                $.ajax({
+                    url:"user/defaultPwd",
+                    data:{id:id},
+                    success:function (data) {
+                        if (data){
+                            alert("密码初始化成功");
+						}
+                    }
+                })
+            }
+        });
+
+        //跳转修改页面
+        $("#update").click(function () {
+            var userId=$("#userId").val();
+            window.location="userUpdate.html?id="+id;
+        });
+
+	</script>
+
+
+</body>
+</html>
