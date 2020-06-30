@@ -1,6 +1,0 @@
-hello2
-<<<<<<< HEAD
-在hello2中添加内容
-=======
-dev1中修改hello2文件
->>>>>>> dev1
