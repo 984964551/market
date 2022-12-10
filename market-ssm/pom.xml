@@ -59,7 +59,7 @@
       struts与jsf集成类、文件上传的支持类、filter类和大量工具辅助类-->
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>5.2.4.RELEASE</version>
+      <version>6.0.0</version>
     </dependency>
     <dependency>
       <!--spring mvc相关，实现springmvc的操作。-->
