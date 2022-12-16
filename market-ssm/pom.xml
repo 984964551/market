@@ -65,7 +65,7 @@
       <!--spring mvc相关，实现springmvc的操作。-->
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>5.2.4.RELEASE</version>
+      <version>5.2.20.RELEASE</version>
     </dependency>
     <!--HttpServletRequest和HttpServletResponse等对象的实现-->
     <dependency>
